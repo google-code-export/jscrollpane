@@ -61,7 +61,7 @@ $.fn.jScrollPane = function(settings)
 				var paneWidth = $c.innerWidth();
 				var paneHeight = $c.outerHeight();
 				var trackHeight = paneHeight;
-				$('>.jScrollPaneTrack, >.jScrollArrowUp, >.jScrollArrowDown', $c).remove();
+				$('.jScrollPaneTrack, .jScrollArrowUp, .jScrollArrowDown', $c).remove();
 				$this.css({'top':0});
 			} else {
 				var currentScrollPosition = 0;
@@ -82,7 +82,7 @@ $.fn.jScrollPane = function(settings)
 						'tabindex', 
 						settings.tabIndex
 					)
-				).addClass('ui-widget-content');
+				);
 				// deal with text size changes (if the jquery.em plugin is included)
 				// and re-initialise the scrollPane so the track maintains the
 				// correct size
@@ -162,15 +162,17 @@ $.fn.jScrollPane = function(settings)
 			if (percentInView < .99) {
 				var $container = $this.parent();
 				$container.append(
-					$('<div></div>').attr({'className':'jScrollPaneTrack'}).css({'width':settings.scrollbarWidth+'px'}).addClass('ui-widget-content').append(
-						$('<div></div>').attr({'className':'jScrollPaneDrag ui-widget-content ui-state-default ui-corner-all'}).css({width:settings.scrollbarWidth+'px'}).append(
-							$('<div></div>').attr({'className':'ui-icon ui-icon-grip-dotted-horizontal'}).css({width:settings.scrollbarWidth+'px', height:settings.scrollbarWidth+'px'})
+					$('<div></div>').attr({'className':'jScrollPaneTrackHolder ui-widget-content ui-state-default'}).css({'width':(settings.scrollbarWidth+1)+'px'}).append(
+						$('<div></div>').attr({'className':'jScrollPaneTrack'}).css({'width':settings.scrollbarWidth+'px'}).append(
+							$('<div></div>').attr({'className':'jScrollPaneDrag ui-widget-content ui-state-default'}).css({width:(settings.scrollbarWidth-2)+'px'}).append(
+								$('<div></div>').attr({'className':'ui-icon ui-icon-grip-dotted-horizontal'}).css({width:settings.scrollbarWidth+'px', height:settings.scrollbarWidth+'px'})
+							)
 						)
 					)
 				);
 				
-				var $track = $('>.jScrollPaneTrack', $container);
-				var $drag = $('>.jScrollPaneTrack .jScrollPaneDrag', $container).hover(highlight, unhighlight);
+				var $track = $('.jScrollPaneTrack', $container);
+				var $drag = $('.jScrollPaneTrack .jScrollPaneDrag', $container).hover(highlight, unhighlight);
 				
 				var currentArrowDirection;
 				var currentArrowTimerArr = [];// Array is used to store timers since they can stack up when dealing with keyboard events. This ensures all timers are cleaned up in the end, preventing an acceleration bug.
@@ -245,7 +247,7 @@ $.fn.jScrollPane = function(settings)
 						}
 						return false;
 					};
-					$container
+					$('.jScrollPaneTrackHolder', $container)
 						.append(
 							$('<a></a>')
 								.attr({'href':'javascript:;', 'className':'jScrollArrowUp ui-state-default', 'tabindex':-1})
@@ -272,18 +274,18 @@ $.fn.jScrollPane = function(settings)
 								.bind('click', rf)
 								.hover(highlight, unhighlight)
 						);
-					var $upArrow = $('>.jScrollArrowUp', $container);
-					var $downArrow = $('>.jScrollArrowDown', $container);
+					var $upArrow = $('.jScrollArrowUp', $container);
+					var $downArrow = $('.jScrollArrowDown', $container);
 					if (settings.arrowSize) {
-						trackHeight = paneHeight - settings.arrowSize - settings.arrowSize;
+						trackHeight = paneHeight - 2 * (settings.arrowSize + 1); // 1 for the UI borders...
 						$track
 							.css({'height': trackHeight+'px', top:settings.arrowSize+'px'})
 					} else {
-						var topArrowHeight = $upArrow.height();
+						var topArrowHeight = $upArrow.outerHeight();
 						settings.arrowSize = topArrowHeight;
-						trackHeight = paneHeight - topArrowHeight - $downArrow.height();
+						trackHeight = paneHeight - topArrowHeight - $downArrow.outerHeight() + 2;
 						$track
-							.css({'height': trackHeight+'px', top:topArrowHeight+'px'})
+							.css({'height': trackHeight+'px', top:(topArrowHeight-1)+'px'})
 					}
 				}
 				

@@ -4,19 +4,23 @@
 	overflow: hidden;
 	z-index: 1;
 }
-
-.jScrollPaneTrack {
+.jScrollPaneTrackHolder
+{
 	position: absolute;
-	cursor: pointer;
 	right: 0;
 	top: 0;
+	margin-right: -1px;
 	height: 100%;
+}
+.jScrollPaneTrack {
+	height: 100%;
+	position: absolute;
 }
 .jScrollPaneDrag {
 	position: absolute;
 	cursor: pointer;
 	overflow: hidden;
-	left: -1px;
+	left: 0;
 }
 a.jScrollArrowUp,
 a.jScrollArrowDown {
@@ -24,10 +28,12 @@ a.jScrollArrowDown {
 	position: absolute;
 	top: 0;
 	right: 0;
+	margin: -1px -1px 0 0;
 	overflow: hidden;
 }
 a.jScrollArrowDown {
 	bottom: 0;
+	margin: 0 -1px -1px 0;
 	top: auto;
 }
 a.jScrollArrowDown:hover {
