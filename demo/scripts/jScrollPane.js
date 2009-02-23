@@ -72,7 +72,7 @@ $.fn.jScrollPane = function(settings)
 				var trackHeight = paneHeight;
 				$this.wrap(
 					$('<div></div>').attr(
-						{'className':'jScrollPaneContainer ui-widget'}
+						{'className':'jScrollPaneContainer ui-widget ui-widget-content'}
 					).css(
 						{
 							'height':paneHeight+'px', 
@@ -141,12 +141,17 @@ $.fn.jScrollPane = function(settings)
 
 			var highlight = function()
 			{
-				$(this).addClass('ui-state-highlight');
+				var $this = $(this);
+				if (!$this.is('.ui-state-disabled'))
+				{
+					$(this).addClass('ui-state-hover');
+
+				}
 			};
 
 			var unhighlight = function()
 			{
-				$(this).removeClass('ui-state-highlight');
+				$(this).removeClass('ui-state-hover');
 			};
 
 			$this.css(cssToApply);
@@ -157,10 +162,9 @@ $.fn.jScrollPane = function(settings)
 			if (percentInView < .99) {
 				var $container = $this.parent();
 				$container.append(
-					$('<div></div>').attr({'className':'jScrollPaneTrack'}).css({'width':settings.scrollbarWidth+'px'}).addClass('ui-widget-content ').append(
-						$('<div></div>').attr({'className':'jScrollPaneDrag'}).css({'width':settings.scrollbarWidth+'px'}).addClass('ui-state-default ui-widget-content ui-icon-grip-solid-horizontal').append(
-							$('<div></div>').attr({'className':'jScrollPaneDragTop'}).css({'width':settings.scrollbarWidth+'px'}).addClass('ui-corner-top'),
-							$('<div></div>').attr({'className':'jScrollPaneDragBottom'}).css({'width':settings.scrollbarWidth+'px'}).addClass('ui-corner-bottom')
+					$('<div></div>').attr({'className':'jScrollPaneTrack'}).css({'width':settings.scrollbarWidth+'px'}).addClass('ui-widget-content').append(
+						$('<div></div>').attr({'className':'jScrollPaneDrag ui-widget-content ui-state-default ui-corner-all'}).css({width:settings.scrollbarWidth+'px'}).append(
+							$('<div></div>').attr({'className':'ui-icon ui-icon-grip-dotted-horizontal'}).css({width:settings.scrollbarWidth+'px', height:settings.scrollbarWidth+'px'})
 						)
 					)
 				);
@@ -228,45 +232,42 @@ $.fn.jScrollPane = function(settings)
 					var onArrowMouseUp = function(event)
 					{
 						$('html').unbind('mouseup', onArrowMouseUp);
-						currentArrowButton.removeClass('jScrollActiveArrowButton');
+						currentArrowButton.removeClass('jScrollActiveArrowButton ui-state-active');
 						clearInterval(currentArrowInterval);
 					};
 					var onArrowMouseDown = function() {
 						$('html').bind('mouseup', onArrowMouseUp);
-						currentArrowButton.addClass('jScrollActiveArrowButton');
-						currentArrowInc = 0;
-						whileArrowButtonDown();
-						currentArrowInterval = setInterval(whileArrowButtonDown, 100);
+						if (!currentArrowButton.is('.ui-state-disabled')) {
+							currentArrowButton.addClass('jScrollActiveArrowButton ui-state-active');
+							currentArrowInc = 0;
+							whileArrowButtonDown();
+							currentArrowInterval = setInterval(whileArrowButtonDown, 100);
+						}
+						return false;
 					};
 					$container
 						.append(
 							$('<a></a>')
-								.attr({'href':'javascript:;', 'className':'jScrollArrowUp', 'tabindex':-1})
+								.attr({'href':'javascript:;', 'className':'jScrollArrowUp ui-state-default', 'tabindex':-1})
 								.css({width:settings.scrollbarWidth+'px', height: settings.scrollbarWidth+'px'})
-								.html('Scroll up')
-								.addClass('ui-state-default ui-icon ui-icon-triangle-1-n')
+								.html('<span class="ui-helper-hidden-accessible">Scroll up</span><span class="ui-icon ui-icon-triangle-1-n" />')
 								.bind('mousedown', function()
 								{
 									currentArrowButton = $(this);
 									currentArrowDirection = -1;
-									onArrowMouseDown();
-									this.blur();
-									return false;
+									return onArrowMouseDown();
 								})
 								.bind('click', rf)
 								.hover(highlight, unhighlight),
 							$('<a></a>')
-								.attr({'href':'javascript:;', 'className':'jScrollArrowDown', 'tabindex':-1})
+								.attr({'href':'javascript:;', 'className':'jScrollArrowDown ui-state-default', 'tabindex':-1})
 								.css({width:settings.scrollbarWidth+'px', height: settings.scrollbarWidth+'px'})
-								.html('Scroll down')
-								.addClass('ui-state-default ui-icon ui-icon-triangle-1-s')
+								.html('<span class="ui-helper-hidden-accessible">Scroll down</span><span class="ui-icon ui-icon-triangle-1-s" />')
 								.bind('mousedown', function()
 								{
 									currentArrowButton = $(this);
 									currentArrowDirection = 1;
-									onArrowMouseDown();
-									this.blur();
-									return false;
+									return onArrowMouseDown();
 								})
 								.bind('click', rf)
 								.hover(highlight, unhighlight)
@@ -320,6 +321,7 @@ $.fn.jScrollPane = function(settings)
 					if ($.browser.msie) {
 						$('html').bind('dragstart', ignoreNativeDrag).bind('selectstart', ignoreNativeDrag);
 					}
+					$drag.addClass('ui-state-active');
 					return false;
 				};
 				var onStopDrag = function()
@@ -329,6 +331,7 @@ $.fn.jScrollPane = function(settings)
 					if ($.browser.msie) {
 						$('html').unbind('dragstart', ignoreNativeDrag).unbind('selectstart', ignoreNativeDrag);
 					}
+					$drag.removeClass('ui-state-active');
 				};
 				var positionDrag = function(destY)
 				{

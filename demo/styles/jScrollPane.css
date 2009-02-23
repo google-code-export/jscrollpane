@@ -18,38 +18,17 @@
 	overflow: hidden;
 	left: -1px;
 }
-.jScrollPaneDragTop {
-	position: absolute;
-	top: 0;
-	left: 0;
-	overflow: hidden;
-}
-.jScrollPaneDragBottom {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	overflow: hidden;
-}
-a.jScrollArrowUp {
-	display: block;
-	position: absolute;
-	z-index: 1;
-	top: 0;
-	right: 0;
-	text-indent: -2000px;
-	overflow: hidden;
-}
-a.jScrollArrowUp:hover {
-}
-
+a.jScrollArrowUp,
 a.jScrollArrowDown {
 	display: block;
 	position: absolute;
-	z-index: 1;
-	bottom: 0;
+	top: 0;
 	right: 0;
-	text-indent: -2000px;
 	overflow: hidden;
+}
+a.jScrollArrowDown {
+	bottom: 0;
+	top: auto;
 }
 a.jScrollArrowDown:hover {
 }
