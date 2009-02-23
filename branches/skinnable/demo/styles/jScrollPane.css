@@ -11,13 +11,12 @@
 	right: 0;
 	top: 0;
 	height: 100%;
-	background: #aaa;
 }
 .jScrollPaneDrag {
 	position: absolute;
-	background: #666;
 	cursor: pointer;
 	overflow: hidden;
+	left: -1px;
 }
 .jScrollPaneDragTop {
 	position: absolute;
@@ -39,11 +38,8 @@ a.jScrollArrowUp {
 	right: 0;
 	text-indent: -2000px;
 	overflow: hidden;
-	/*background-color: #666;*/
-	height: 9px;
 }
 a.jScrollArrowUp:hover {
-	/*background-color: #f60;*/
 }
 
 a.jScrollArrowDown {
@@ -54,12 +50,8 @@ a.jScrollArrowDown {
 	right: 0;
 	text-indent: -2000px;
 	overflow: hidden;
-	/*background-color: #666;*/
-	height: 9px;
 }
 a.jScrollArrowDown:hover {
-	/*background-color: #f60;*/
 }
 a.jScrollActiveArrowButton, a.jScrollActiveArrowButton:hover {
-	/*background-color: #f00;*/
 }

@@ -4,12 +4,37 @@
 	<head>
 		<title>jScrollPane - basic examples</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" media="all" href="styles/demoStyles.css" />
+
+		<link type="text/css" rel="stylesheet" href="http://ui.jquery.com/testing/themes/base/ui.all.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="styles/jScrollPane.css" />
+		<style type="text/css">
+		.holder {
+			float: left;
+			margin: 10px;
+		}
+		.scroll-pane {
+			width: 200px;
+			height: 200px;
+			overflow: auto;
+			float: left;
+		}
+		#pane1 {
+		}
+		#pane2 {
+			height: 150px;
+		}
+		#pane3 {
+			height: 190px;
+		}
+		#pane4 {
+			height: 190px;
+		}
+		</style>
+
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ui.jquery.com/themeroller/themeswitchertool/"></script>
 		<script type="text/javascript" src="scripts/jquery.mousewheel.js"></script>
 		<script type="text/javascript" src="scripts/jScrollPane.js"></script>
-		<!--script type="text/javascript" src="../dist/jScrollPane.min.js"></script-->
 		<script type="text/javascript">
 			
 			$(function()
@@ -17,7 +42,7 @@
 				// this initialises the demo scollpanes on the page.
 				$('#pane1').jScrollPane();
 				$('#pane2').jScrollPane({showArrows:true});
-				$('#pane3, #pane4').jScrollPane({scrollbarWidth:20, scrollbarMargin:10});
+				$('#pane3, #pane4').jScrollPane({scrollbarMargin:10});
                 
 				// this allows you to click a link to add content to #pane4 and shows how to 
 				// reinitialise the scrollbars when you have done this.
@@ -37,6 +62,8 @@
 						$('#pane4').empty().append($('<p></p>').html($('#intro').html())).jScrollPane({scrollbarWidth:20, scrollbarMargin:10});
 					}
 				);
+
+				$('#switcher').themeswitcher();
 			});
 			
 		</script>
@@ -50,6 +77,7 @@
 			how you can easily control the appearance of the scrollbars using basic
 			CSS. View source to see how it's all done...
 		</p>
+		<div id="switcher"></div>
 		
 		<div class="holder">
 			<h3>#pane1</h3>
