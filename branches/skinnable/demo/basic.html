@@ -8,6 +8,11 @@
 		<link type="text/css" rel="stylesheet" href="http://ui.jquery.com/testing/themes/base/ui.all.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="styles/jScrollPane.css" />
 		<style type="text/css">
+		body
+		{
+			font-size: 62.5%;
+		}
+
 		.holder {
 			float: left;
 			margin: 10px;
@@ -17,6 +22,7 @@
 			height: 200px;
 			overflow: auto;
 			float: left;
+			padding: 0 4px 0 0;
 		}
 		#pane1 {
 		}
@@ -40,7 +46,7 @@
 			$(function()
 			{
 				// this initialises the demo scollpanes on the page.
-				$('#pane1').jScrollPane();
+				$('#pane1').jScrollPane({showArrows:true});
 				$('#pane2').jScrollPane({showArrows:true});
 				$('#pane3, #pane4').jScrollPane({scrollbarMargin:10});
                 
