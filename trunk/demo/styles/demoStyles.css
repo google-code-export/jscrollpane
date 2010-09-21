@@ -5,6 +5,19 @@ body {
 	font-size: 80%;
 }
 
+#new-version
+{
+	border: 2px solid #f00;
+	margin: 1em 0;
+	padding: .5em 1em 0;
+	background: #ffe;
+}
+
+#new-version h1
+{
+	margin-top: 0;
+}
+
 a.jScrollArrowUp {
 	background: url(../images/basic_arrow_up.gif) repeat-x 0 0;
 }
